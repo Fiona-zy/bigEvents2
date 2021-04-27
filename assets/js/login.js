@@ -31,9 +31,12 @@ $(function () {
         e.preventDefault();
 
         let data = $(this).serialize();
+
+
+        $(this).serialize('')
         $.ajax({
             type: 'POST',
-            url: 'http://ajax.frontend.itheima.net/api/reguser',
+            url: '/api/reguser',
             data: data,
             success: function (res) {
                 // console.log(res);
@@ -46,7 +49,9 @@ $(function () {
             }
         })
     });
-    //登录
+    //登录\
+    //登录成功  提示框
+    //需要将token存储到本地中   
     $('#loginForm').on('submit',function (e) {
         e.preventDefault();
         let data = $(this).serialize();
@@ -55,18 +60,19 @@ $(function () {
             url: '/api/login',
             data: data,
             success:function (res) {
-                console.log(res);
+                // console.log(res);
                 if (res.status !== 0) {
                     return layer.msg('登录失败')
                 };
+
+                //存储内容   
                 localStorage.setItem('token', res.token);
                 layer.msg(
                     '登录成功，即将去后台主页',
                     {
                         time:2000,
-                    },//2秒后关闭
+                    },
                     function () {
-                         //2秒后关闭后做的事情
                         location.href = 'index.html';
                     }
                 )
